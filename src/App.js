@@ -7,12 +7,13 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard'
 import { useState } from 'react';
 import { Toaster } from 'react-hot-toast';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   
   return (
-    <div>
+    <div className='h-screen w-screen flex flex-col'>
 
       <NavBar isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}/>
 
@@ -20,7 +21,11 @@ function App() {
         <Route path='/' element={<Home/>} />
         <Route path='/login' element={<Login setLoggedIn={setLoggedIn}/>} />
         <Route path='/signup' element={<SignUp setLoggedIn={setLoggedIn}/>} />
-        <Route path='/dashboard' element={<Dashboard/>} />
+        <Route path='/dashboard' element={
+        <PrivateRoute isLoggedIn={isLoggedIn}>
+          <Dashboard/>
+        </PrivateRoute>
+        }/>
       </Routes>
       <Toaster/>
     </div>
